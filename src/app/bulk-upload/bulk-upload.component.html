@@ -1,0 +1,82 @@
+<div class="page-container">
+  <mat-card class="upload-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>upload_file</mat-icon>
+      <mat-card-title>Bulk Attendance Upload</mat-card-title>
+      <mat-card-subtitle>Upload a CSV or Excel file to add multiple attendance records at once.</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <!-- Format guide -->
+      <div class="format-guide">
+        <mat-icon class="info-icon">info</mat-icon>
+        <span>Expected columns (row 1 = header, skipped automatically):</span>
+        <code>reg, date (YYYY-MM-DD), breakfast (true/false), lunch (true/false), dinner (true/false)</code>
+      </div>
+
+      <!-- Drop zone -->
+      <div class="drop-zone"
+           [class.dragging]="isDragging"
+           [class.has-file]="selectedFile"
+           (dragover)="onDragOver($event)"
+           (dragleave)="onDragLeave()"
+           (drop)="onDrop($event)">
+
+        <mat-icon class="drop-icon">{{ selectedFile ? 'insert_drive_file' : 'cloud_upload' }}</mat-icon>
+
+        <ng-container *ngIf="!selectedFile">
+          <p class="drop-text">Drag & drop your file here</p>
+          <p class="drop-sub">or</p>
+        </ng-container>
+
+        <ng-container *ngIf="selectedFile">
+          <p class="drop-text file-name">{{ selectedFile.name }}</p>
+          <p class="drop-sub">{{ (selectedFile.size / 1024).toFixed(1) }} KB</p>
+        </ng-container>
+
+        <button mat-stroked-button color="primary" (click)="fileInput.click()" type="button">
+          {{ selectedFile ? 'Change File' : 'Browse File' }}
+        </button>
+        <input #fileInput type="file" accept=".csv,.xlsx,.xls" (change)="onFileSelected($event)" hidden>
+      </div>
+
+      <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="progress"></mat-progress-bar>
+
+      <!-- Action buttons -->
+      <div class="actions" *ngIf="selectedFile && !isLoading">
+        <button mat-flat-button color="primary" (click)="upload()" [disabled]="isLoading">
+          <mat-icon>cloud_upload</mat-icon> Upload
+        </button>
+        <button mat-stroked-button (click)="reset()">
+          <mat-icon>clear</mat-icon> Clear
+        </button>
+      </div>
+
+      <!-- Results -->
+      <div class="results" *ngIf="result">
+        <mat-divider class="divider"></mat-divider>
+        <h3 class="results-title">Upload Results</h3>
+
+        <div class="result-chips">
+          <mat-chip class="chip-success">
+            <mat-icon matChipAvatar>check_circle</mat-icon>
+            {{ result.successCount }} Successful
+          </mat-chip>
+          <mat-chip [class]="result.failureCount > 0 ? 'chip-error' : 'chip-success'">
+            <mat-icon matChipAvatar>{{ result.failureCount > 0 ? 'error' : 'check_circle' }}</mat-icon>
+            {{ result.failureCount }} Failed
+          </mat-chip>
+        </div>
+
+        <mat-list *ngIf="result.errors.length > 0" class="error-list">
+          <mat-list-item *ngFor="let err of result.errors">
+            <mat-icon matListItemIcon class="err-icon">warning</mat-icon>
+            <span matListItemTitle>{{ err }}</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

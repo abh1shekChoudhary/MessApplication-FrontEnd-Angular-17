@@ -1,0 +1,9 @@
+.page-container { max-width: 640px; margin: 32px auto; padding: 0 16px; }
+.spinner-wrap   { display: flex; justify-content: center; padding: 48px; }
+.price-table    { width: 100%; }
+.meal-icon      { color: #1976d2; vertical-align: middle; }
+.meal-label     { font-weight: 500; font-size: 0.95rem; }
+.price-badge    { font-size: 1.1rem; font-weight: 600; color: #2e7d32; background: #e8f5e9; padding: 4px 12px; border-radius: 20px; }
+.inline-form    { display: inline-flex; align-items: center; }
+.price-field    { width: 120px; }
+.editing-row    { background: #fffde7; }

@@ -11,6 +11,9 @@ import { DeleteStudentComponent } from './delete-student/delete-student.componen
 import { StudentDetailComponent } from './student-detail/student-detail.component';
 import { MenuComponent } from './menu/menu.component';
 import { FeaturesComponent } from './features/features.component';
+import { BulkUploadComponent } from './bulk-upload/bulk-upload.component';
+import { PricesComponent } from './prices/prices.component';
+import { MenuEditComponent } from './menu-edit/menu-edit.component';
 import { authGuard } from './auth.guard';
 import { adminGuard } from './admin.guard';
 import { loginGuard } from './login/login.guard';
@@ -30,12 +33,17 @@ export const routes: Routes = [
   { path: 'students/total',  component: StudentTotalComponent,  canActivate: [authGuard] },
   { path: 'students/detail', component: StudentDetailComponent, canActivate: [authGuard] },
 
-  // ── Admin-only ─────────────────────────────────────────────────────────────
+  // ── Admin-only — existing ──────────────────────────────────────────────────
   { path: 'getStudents',      component: StudentListComponent,   canActivate: [adminGuard] },
   { path: 'students/dues',    component: StudentDuesComponent,   canActivate: [adminGuard] },
   { path: 'students/add/new', component: AddStudentComponent,    canActivate: [adminGuard] },
   { path: 'students/update',  component: UpdateStudentComponent, canActivate: [adminGuard] },
   { path: 'students/delete',  component: DeleteStudentComponent, canActivate: [adminGuard] },
+
+  // ── Admin-only — NEW features ──────────────────────────────────────────────
+  { path: 'admin/bulk-upload', component: BulkUploadComponent, canActivate: [adminGuard] },
+  { path: 'admin/prices',      component: PricesComponent,     canActivate: [adminGuard] },
+  { path: 'admin/menu-edit',   component: MenuEditComponent,   canActivate: [adminGuard] },
 
   // ── Default & Wildcard ─────────────────────────────────────────────────────
   { path: '',   redirectTo: '/login', pathMatch: 'full' },

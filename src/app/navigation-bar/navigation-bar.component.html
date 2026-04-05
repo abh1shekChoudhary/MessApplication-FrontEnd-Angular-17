@@ -3,21 +3,48 @@
   <span>Mess Management</span>
   <span class="toolbar-spacer"></span>
 
-  <!-- Use ng-container to check the user's role -->
   <ng-container *ngIf="authService.userRole$ | async as role">
 
     <!-- ADMIN NAVIGATION -->
     <ng-container *ngIf="role === 'admin'">
       <a mat-button routerLink="/getStudents">Student List</a>
       <a mat-button routerLink="/students/dues">Dues Report</a>
-      <button mat-button [matMenuTriggerFor]="adminMenu">More Actions</button>
-      <mat-menu #adminMenu="matMenu">
-        <button mat-menu-item routerLink="/menu/weekly">Weekly Menu</button>
-        <button mat-menu-item routerLink="/students/detail">Student History</button>
-        <button mat-menu-item routerLink="/students/add/new">Add Attendance</button>
-        <button mat-menu-item routerLink="/students/update">Update Attendance</button>
-        <button mat-menu-item routerLink="/students/delete">Delete Attendance</button>
-        <button mat-menu-item routerLink="/students/total">Student Total Lookup</button>
+
+      <!-- Attendance Actions -->
+      <button mat-button [matMenuTriggerFor]="attendanceMenu">Attendance ▾</button>
+      <mat-menu #attendanceMenu="matMenu">
+        <button mat-menu-item routerLink="/students/add/new">
+          <mat-icon>person_add</mat-icon> Add Single Record
+        </button>
+        <button mat-menu-item routerLink="/admin/bulk-upload">
+          <mat-icon>upload_file</mat-icon> Bulk Upload (CSV/Excel)
+        </button>
+        <button mat-menu-item routerLink="/students/update">
+          <mat-icon>edit</mat-icon> Update Record
+        </button>
+        <button mat-menu-item routerLink="/students/delete">
+          <mat-icon>delete</mat-icon> Delete Record
+        </button>
+        <button mat-menu-item routerLink="/students/detail">
+          <mat-icon>history</mat-icon> Student History
+        </button>
+        <button mat-menu-item routerLink="/students/total">
+          <mat-icon>calculate</mat-icon> Student Total Lookup
+        </button>
+      </mat-menu>
+
+      <!-- System Config -->
+      <button mat-button [matMenuTriggerFor]="configMenu">Config ▾</button>
+      <mat-menu #configMenu="matMenu">
+        <button mat-menu-item routerLink="/admin/prices">
+          <mat-icon>price_change</mat-icon> Manage Meal Prices
+        </button>
+        <button mat-menu-item routerLink="/admin/menu-edit">
+          <mat-icon>restaurant_menu</mat-icon> Edit Weekly Menu
+        </button>
+        <button mat-menu-item routerLink="/menu/weekly">
+          <mat-icon>calendar_view_week</mat-icon> View Weekly Menu
+        </button>
       </mat-menu>
     </ng-container>
 
@@ -28,17 +55,16 @@
       <a mat-button routerLink="/students/total">My Total</a>
     </ng-container>
 
-    <!-- --- THIS IS THE NEW GUEST NAVIGATION --- -->
+    <!-- GUEST NAVIGATION -->
     <ng-container *ngIf="role === 'guest'">
       <a mat-button routerLink="/features">Features Showcase</a>
     </ng-container>
 
   </ng-container>
 
-  <!-- Logout Button (visible to all logged-in users) -->
+  <!-- Logout (all roles) -->
   <span class="auth-spacer"></span>
   <button mat-flat-button color="accent" (click)="authService.logout()">
     Logout
   </button>
 </mat-toolbar>
-

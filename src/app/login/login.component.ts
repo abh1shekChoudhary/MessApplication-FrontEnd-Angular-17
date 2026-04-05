@@ -51,11 +51,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Standard login for admins and students
+  /** Standard login — calls POST /auth/login via AuthService */
   onLogin(): void {
-    if (this.loginForm.invalid) {
-      return;
-    }
+    if (this.loginForm.invalid) return;
+
     this.isLoading = true;
     this.errorMessage = null;
     const { username, password } = this.loginForm.value;
@@ -74,16 +73,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // --- NEW METHOD for one-click guest login ---
+  /** Guest login — calls GET /auth/guest-token; no credentials needed */
   loginAsGuest(): void {
     this.isLoading = true;
     this.errorMessage = null;
-    // The credentials are now passed directly from the component
-    this.authService.login('recruiter', 'demo123').subscribe({
+
+    this.authService.loginAsGuest().subscribe({
       next: (success) => {
-        // The AuthService handles navigation on success
         if (!success) {
-          this.errorMessage = 'Guest login is currently unavailable.';
+          this.errorMessage = 'Guest access is currently unavailable.';
         }
         this.isLoading = false;
       },

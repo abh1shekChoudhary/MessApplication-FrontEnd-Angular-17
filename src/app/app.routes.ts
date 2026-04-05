@@ -11,30 +11,41 @@ import { DeleteStudentComponent } from './delete-student/delete-student.componen
 import { StudentDetailComponent } from './student-detail/student-detail.component';
 import { MenuComponent } from './menu/menu.component';
 import { FeaturesComponent } from './features/features.component';
+import { BulkUploadComponent } from './bulk-upload/bulk-upload.component';
+import { PricesComponent } from './prices/prices.component';
+import { MenuEditComponent } from './menu-edit/menu-edit.component';
 import { authGuard } from './auth.guard';
+import { adminGuard } from './admin.guard';
 import { loginGuard } from './login/login.guard';
 import { guestGuard } from './guest.guard';
 
 export const routes: Routes = [
-  // Public & Guest Routes
-  { path: 'login', component: LoginComponent, canActivate: [loginGuard] },
+
+  // ── Public ─────────────────────────────────────────────────────────────────
+  { path: 'login',    component: LoginComponent,    canActivate: [loginGuard] },
+
+  // ── Guest-only (recruiter demo) ─────────────────────────────────────────────
   { path: 'features', component: FeaturesComponent, canActivate: [guestGuard] },
 
-  // Authenticated Routes (Admin & Student)
-  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
-  { path: 'menu/:type', component: MenuComponent, canActivate: [authGuard] },
-  { path: 'students/total', component: StudentTotalComponent, canActivate: [authGuard] },
+  // ── Authenticated (Admin + Student) ────────────────────────────────────────
+  { path: 'home',            component: HomeComponent,          canActivate: [authGuard] },
+  { path: 'menu/:type',      component: MenuComponent,          canActivate: [authGuard] },
+  { path: 'students/total',  component: StudentTotalComponent,  canActivate: [authGuard] },
   { path: 'students/detail', component: StudentDetailComponent, canActivate: [authGuard] },
 
-  // Admin-Only Routes
-  { path: 'getStudents', component: StudentListComponent, canActivate: [authGuard] },
-  { path: 'students/dues', component: StudentDuesComponent, canActivate: [authGuard] },
-  { path: 'students/add/new', component: AddStudentComponent, canActivate: [authGuard] },
-  { path: 'students/update', component: UpdateStudentComponent, canActivate: [authGuard] },
-  { path: 'students/delete', component: DeleteStudentComponent, canActivate: [authGuard] },
+  // ── Admin-only — existing ──────────────────────────────────────────────────
+  { path: 'getStudents',      component: StudentListComponent,   canActivate: [adminGuard] },
+  { path: 'students/dues',    component: StudentDuesComponent,   canActivate: [adminGuard] },
+  { path: 'students/add/new', component: AddStudentComponent,    canActivate: [adminGuard] },
+  { path: 'students/update',  component: UpdateStudentComponent, canActivate: [adminGuard] },
+  { path: 'students/delete',  component: DeleteStudentComponent, canActivate: [adminGuard] },
 
+  // ── Admin-only — NEW features ──────────────────────────────────────────────
+  { path: 'admin/bulk-upload', component: BulkUploadComponent, canActivate: [adminGuard] },
+  { path: 'admin/prices',      component: PricesComponent,     canActivate: [adminGuard] },
+  { path: 'admin/menu-edit',   component: MenuEditComponent,   canActivate: [adminGuard] },
 
-  // Default and Wildcard Redirects
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // ── Default & Wildcard ─────────────────────────────────────────────────────
+  { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];

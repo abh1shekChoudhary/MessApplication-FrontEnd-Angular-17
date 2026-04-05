@@ -1,14 +1,20 @@
-.page-container    { max-width: 960px; margin: 24px auto; padding: 0 16px; }
-.header-card       { margin-bottom: 20px; border-radius: 12px; }
-.spinner-wrap      { display: flex; justify-content: center; padding: 64px; }
-.days-accordion    { display: flex; flex-direction: column; gap: 8px; }
-.day-panel         { border-radius: 10px !important; }
-.day-title         { display: flex; align-items: center; gap: 8px; font-weight: 600; }
-.day-icon          { color: #1976d2; font-size: 20px; height: 20px; width: 20px; }
-.menu-table        { width: 100%; }
-.meal-chip         { font-size: 0.8rem; font-weight: 600; border-radius: 20px; }
-.item-name         { font-weight: 500; }
-.item-desc         { color: #546e7a; font-size: 0.88rem; }
-.edit-field        { min-width: 180px; margin: 4px 0; }
-.edit-field-wide   { min-width: 280px; margin: 4px 0; }
-.editing-row       { background: #fffde7; }
+/* ── Menu Editor — admin theme aware ────────────────────────────────────── */
+
+.page-container  { max-width: 960px; margin: 0 auto; }
+.header-card     { margin-bottom: 20px; border-radius: var(--radius-lg); }
+
+.spinner-wrap    { display: flex; justify-content: center; padding: 64px; }
+
+.days-accordion  { display: flex; flex-direction: column; gap: 8px; }
+.day-panel       { border-radius: var(--radius-md) !important; }
+
+.day-title { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-main); }
+.day-icon  { color: var(--accent); font-size: 20px; height: 20px; width: 20px; }
+
+.menu-table    { width: 100%; }
+.meal-chip     { font-size: 0.8rem; font-weight: 600; border-radius: 20px; }
+.item-name     { font-weight: 500; color: var(--text-main); }
+.item-desc     { color: var(--text-muted); font-size: 0.88rem; }
+.edit-field      { min-width: 180px; margin: 4px 0; }
+.edit-field-wide { min-width: 280px; margin: 4px 0; }
+.editing-row   { background: var(--surface-2) !important; }

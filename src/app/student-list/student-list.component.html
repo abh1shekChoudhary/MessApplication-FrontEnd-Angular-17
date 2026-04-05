@@ -1,15 +1,39 @@
 <div class="list-container">
-  <h2>Student Attendance for {{ selectedDate }}</h2>
 
+  <!-- Page header -->
+  <div class="page-header">
+    <h2>Attendance — {{ selectedDate }}</h2>
+    <span class="date-chip">{{ selectedDate }}</span>
+  </div>
+
+  <!-- Stat cards -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-card__label">Records Today</div>
+      <div class="stat-card__value">{{ dataSource.data.length }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__label">Breakfast</div>
+      <div class="stat-card__value">{{ breakfastCount }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__label">Lunch</div>
+      <div class="stat-card__value">{{ lunchCount }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__label">Dinner</div>
+      <div class="stat-card__value">{{ dinnerCount }}</div>
+    </div>
+  </div>
+
+  <!-- Controls -->
   <div class="controls-container">
-    <!-- Filter Input Field (visible to everyone) -->
     <mat-form-field appearance="outline" class="filter-field">
       <mat-label>Filter by Registration No.</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="e.g., 22BAI10072">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
-    <!-- Date Picker (ONLY for admins) -->
     <div *ngIf="isAdmin$ | async" class="date-picker-container">
       <mat-form-field appearance="outline">
         <mat-label>Choose a date</mat-label>
@@ -21,45 +45,61 @@
     </div>
   </div>
 
-
   <!-- Loading Spinner -->
   <div *ngIf="isLoading" class="spinner-container">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>
 
   <!-- Main Data Table -->
-  <div class="table-container mat-elevation-z8" [hidden]="isLoading">
+  <div class="table-container" [hidden]="isLoading">
     <table mat-table [dataSource]="dataSource" matSort>
-      <!-- Column Definitions -->
+
       <ng-container matColumnDef="reg">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Reg. No.</th>
-        <td mat-cell *matCellDef="let student">{{ student.reg }}</td>
+        <td mat-cell *matCellDef="let student">{{ student.reg | maskRegNo }}</td>
       </ng-container>
+
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
         <td mat-cell *matCellDef="let student">{{ student.date }}</td>
       </ng-container>
+
       <ng-container matColumnDef="breakfast">
         <th mat-header-cell *matHeaderCellDef>Breakfast</th>
-        <td mat-cell *matCellDef="let student">{{ student.breakfast ? 'Yes' : 'No' }}</td>
+        <td mat-cell *matCellDef="let student">
+          <span [class]="student.breakfast ? 'pill-yes' : 'pill-no'">
+            {{ student.breakfast ? 'Yes' : 'No' }}
+          </span>
+        </td>
       </ng-container>
+
       <ng-container matColumnDef="lunch">
         <th mat-header-cell *matHeaderCellDef>Lunch</th>
-        <td mat-cell *matCellDef="let student">{{ student.lunch ? 'Yes' : 'No' }}</td>
+        <td mat-cell *matCellDef="let student">
+          <span [class]="student.lunch ? 'pill-yes' : 'pill-no'">
+            {{ student.lunch ? 'Yes' : 'No' }}
+          </span>
+        </td>
       </ng-container>
+
       <ng-container matColumnDef="dinner">
         <th mat-header-cell *matHeaderCellDef>Dinner</th>
-        <td mat-cell *matCellDef="let student">{{ student.dinner ? 'Yes' : 'No' }}</td>
+        <td mat-cell *matCellDef="let student">
+          <span [class]="student.dinner ? 'pill-yes' : 'pill-no'">
+            {{ student.dinner ? 'Yes' : 'No' }}
+          </span>
+        </td>
       </ng-container>
+
       <ng-container matColumnDef="total">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
         <td mat-cell *matCellDef="let student">₹{{ student.total }}</td>
       </ng-container>
 
-      <!-- Row Definitions -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
+
 </div>

@@ -110,5 +110,10 @@ export class StudentListComponent implements OnInit, AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  // ── Stat card counts ───────────────────────────────────────────────────
+  get breakfastCount(): number { return this.dataSource.data.filter(s => s.breakfast).length; }
+  get lunchCount():     number { return this.dataSource.data.filter(s => s.lunch).length; }
+  get dinnerCount():    number { return this.dataSource.data.filter(s => s.dinner).length; }
 }
 

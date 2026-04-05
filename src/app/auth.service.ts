@@ -45,7 +45,9 @@ export class AuthService {
       // Restore session on page reload
       const storedSession = localStorage.getItem('user_session');
       if (storedSession) {
-        this.session.next(JSON.parse(storedSession));
+        const session = JSON.parse(storedSession) as UserSession;
+        this.session.next(session);
+        this.restoreTheme(session);  // re-apply admin-theme if admin
       }
     }
   }
@@ -91,6 +93,13 @@ export class AuthService {
     localStorage.setItem('jwt_token',    response.token);
     this.session.next(session);
 
+    // Apply theme class — admin gets dark navy sidebar theme
+    if (role === 'admin') {
+      document.body.classList.add('admin-theme');
+    } else {
+      document.body.classList.remove('admin-theme');
+    }
+
     if (role === 'guest') {
       this.router.navigate(['/features']);
     } else {
@@ -103,8 +112,19 @@ export class AuthService {
     if (this.isBrowser) {
       localStorage.removeItem('user_session');
       localStorage.removeItem('jwt_token');
+      document.body.classList.remove('admin-theme');
       this.session.next(null);
       this.router.navigate(['/login']);
+    }
+  }
+
+  /** Re-applies admin-theme on page reload if session is admin. Called from constructor. */
+  private restoreTheme(session: UserSession | null): void {
+    if (!this.isBrowser) return;
+    if (session?.role === 'admin') {
+      document.body.classList.add('admin-theme');
+    } else {
+      document.body.classList.remove('admin-theme');
     }
   }
 }

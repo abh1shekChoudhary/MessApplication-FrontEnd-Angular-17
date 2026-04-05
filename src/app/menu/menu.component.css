@@ -1,70 +1,53 @@
+.container { padding: 0; }
 
-.container {
-  padding: 24px;
-}
-
+/* Page header — shared by both admin and student views */
 .header-container {
   display: flex;
   align-items: center;
-  gap: 16px;
-  color: #333;
+  gap: 12px;
   margin-bottom: 24px;
 }
-
 .header-container mat-icon {
-  font-size: 2.8rem;
-  height: 2.8rem;
-  width: 2.8rem;
+  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+  color: var(--accent);
 }
-
 .header-container h2 {
-  font-size: 2.2rem;
-  font-weight: 300;
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--text-main);
   margin: 0;
 }
-
-/* Admin View Styles */
-.admin-menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
+body.admin-theme .header-container h2 {
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
-.mat-expansion-panel-header {
-    font-size: 1rem;
-}
-
-.side-dishes-title {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--primary-color);
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
-
-.side-dishes-content {
-    font-size: 0.9rem;
-    color: #666;
-    line-height: 1.5;
-}
-
-/* Student View Styles */
-.student-menu-grid {
-  display: grid;
-  grid-template-columns: 1fr; /* A single column for a cleaner look */
-  gap: 15px;
-  max-width: 700px;
-}
+/* ── Student upcoming view ───────────────────────────────────────────── */
+.student-menu-grid { max-width: 680px; }
 
 .upcoming-panel {
-    border-radius: 8px !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  background: var(--surface) !important;
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  margin-bottom: 10px !important;
+  box-shadow: none !important;
 }
-
 .upcoming-panel .mat-expansion-panel-header {
-    font-size: 1.1rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
 }
+.side-dishes         { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+.side-dishes-title   { font-size: 0.78rem; font-weight: 600; letter-spacing: 1px;
+                       text-transform: uppercase; color: var(--accent-dark); margin: 10px 0 4px; }
+.side-dishes-content { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
 
-.upcoming-panel .side-dishes-title {
-    color: var(--accent-color);
+/* ── Admin weekly grid ─────────────────────────────────────────────────── */
+.admin-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
 }

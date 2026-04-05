@@ -1,132 +1,85 @@
-
-/* Main container to center the login form on the page */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f4f7fc;
+  background: linear-gradient(135deg, #1a2035 0%, #2d1b0e 100%);
   padding: 20px;
   box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
 }
 
-/* Background shape animations */
-.login-container::before,
-.login-container::after {
-  content: '';
-  position: absolute;
-  background: rgba(103, 58, 183, 0.06);
-  border-radius: 50%;
-  z-index: 1;
-  animation: moveShapes 25s infinite alternate;
-}
-.login-container::before {
-  width: 500px;
-  height: 500px;
-  bottom: -250px;
-  left: -250px;
-}
-.login-container::after {
-  width: 300px;
-  height: 300px;
-  top: -150px;
-  right: -150px;
-  animation-delay: -12s;
-}
-@keyframes moveShapes {
-  from { transform: translate(0, 0) rotate(0deg); }
-  to { transform: translate(100px, 50px) rotate(45deg); }
-}
-
-/* Main login card */
 .login-card {
   width: 100%;
   max-width: 400px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  background-color: white;
-  z-index: 2;
+  padding: 36px 40px !important;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  border: none !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4) !important;
 }
 
-/* Header section with icon and title */
 mat-card-header {
-  display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 25px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f0e6d8;
+  margin-bottom: 20px;
 }
 
-/* --- FIX #2: Increased Spacing --- */
 mat-card-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  font-size: 1.8rem;
-  font-weight: 400; /* A more standard weight */
-  margin-bottom: 25px;
-  color: #333; /* Dark grey text for readability */
+  gap: 10px;
+  font-family: 'DM Serif Display', serif !important;
+  font-size: 2rem !important;
+  font-weight: 400 !important;
+  color: #2d1b0e !important;
+  letter-spacing: -0.5px;
 }
 
-
-/* Form fields container */
 mat-card-content {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
-mat-form-field {
-  width: 100%;
-}
+mat-form-field { width: 100%; }
 
-/* Common styles for BOTH login and guest buttons */
 .login-button, .guest-login-button {
   width: 100%;
   padding: 12px 0 !important;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
 }
 
 .login-button {
-  margin-top: 10px;
+  margin-top: 8px;
+  background: #2d1b0e !important;
+  color: #fdf8f3 !important;
 }
 
-/* We style the guest button to look exactly like a mat-flat-button with color="primary" */
 .guest-login-button {
-  background-color: #3f51b5; /* Standard Material Indigo */
-  color: white !important; /* Use !important to override default text color */
-  border: none;
+  border: 1.5px solid #e8a87c !important;
+  color: #2d1b0e !important;
+  background: transparent !important;
 }
+.guest-login-button:hover { background: rgba(232,168,124,0.08) !important; }
 
-
-/* Divider for the "Or" text */
 .divider {
   display: flex;
   align-items: center;
-  text-align: center;
-  color: #010101;
-  margin: 25px 0;
+  color: #b8997e;
+  font-size: 12px;
+  gap: 8px;
+  margin: 16px 0;
 }
-.divider::before,
-.divider::after {
+.divider::before, .divider::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid #eee;
-}
-.divider:not(:empty)::before {
-  margin-right: .25em;
-}
-.divider:not(:empty)::after {
-  margin-left: .25em;
+  border-bottom: 1px solid #f0e6d8;
 }
 
-/* Spinner styling for loading state */
 .spinner-container {
   display: flex;
   justify-content: center;

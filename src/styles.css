@@ -1,58 +1,141 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-/* --- THEME COLOR PALETTE --- */
+/* ──────────────────────────────────────────────────────────────────────────
+   SHARED TOKEN LAYER — consumed by both themes via var()
+   ──────────────────────────────────────────────────────────────────────── */
 :root {
-  --student-primary: #3f51b5; /* Indigo */
-  --student-accent: #ff4081;   /* Pink */
-  --admin-primary: #263238;    /* Charcoal / Slate Grey */
-  --admin-accent: #009688;    /* Muted Teal */
+  --font-display-admin:   'DM Sans',          sans-serif;
+  --font-display-student: 'DM Serif Display', serif;
+  --font-body:            'DM Sans',          sans-serif;
+  --font-serif:           'EB Garamond',      serif;
+
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+
+  --transition:  0.2s ease;
 }
 
-/* --- GLOBAL STYLES --- */
+/* ──────────────────────────────────────────────────────────────────────────
+   STUDENT THEME (default body) — warm terracotta / botanical
+   ──────────────────────────────────────────────────────────────────────── */
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: #f4f7fa; /* A cleaner, brighter background */
-  color: #333;
+  font-family: var(--font-body);
+  background-color: #fdf8f3;
+  color: #2c2416;
+
+  --primary:        #2d1b0e;
+  --accent:         #e8a87c;
+  --accent-dark:    #c97a4a;
+  --surface:        #ffffff;
+  --surface-2:      #fdf8f3;
+  --border-color:   #f0e6d8;
+  --text-main:      #2c2416;
+  --text-muted:     #8a7355;
+  --text-hint:      #b8997e;
+  --success-bg:     #e8f5e0;  --success-text: #2e5c14;
+  --danger-bg:      #fce8e4;  --danger-text:  #c62828;
 }
 
-/* --- DEFAULT (STUDENT) THEME --- */
-body {
-  --primary-color: var(--student-primary);
-  --accent-color: var(--student-accent);
-}
-
-.mat-toolbar {
-  background-color: var(--primary-color);
-  color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Add shadow for depth */
-}
-
-.mat-mdc-flat-button.mat-accent {
-  background-color: var(--accent-color);
-  color: white;
-}
-
-/* --- ADMIN THEME OVERRIDE --- */
+/* ──────────────────────────────────────────────────────────────────────────
+   ADMIN THEME — executive midnight navy
+   ──────────────────────────────────────────────────────────────────────── */
 body.admin-theme {
-  --primary-color: var(--admin-primary);
-  --accent-color: var(--admin-accent);
-  
-  /* Add a subtle, professional background pattern for the admin view */
-  background-color: #e8ecef;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, .05) 2px, transparent 2px),
-    linear-gradient(90deg, rgba(255, 255, 255, .05) 2px, transparent 2px),
-    linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
-  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+  background-color: #f0f2f5;
+  color: #1a2035;
+  font-family: var(--font-display-admin);
+
+  --primary:        #1a2035;
+  --accent:         #64b5f6;
+  --accent-dark:    #1f3066;
+  --surface:        #ffffff;
+  --surface-2:      #f7f9fc;
+  --border-color:   #dde2ec;
+  --text-main:      #1a2035;
+  --text-muted:     #8892b0;
+  --text-hint:      #5a6585;
+  --success-bg:     #e8f5e9;  --success-text: #2e7d32;
+  --danger-bg:      #fce4ec;  --danger-text:  #c62828;
 }
 
-/* --- SHARED COMPONENT STYLES --- */
-/* Give all cards a consistent, clean look */
+/* ──────────────────────────────────────────────────────────────────────────
+   MATERIAL COMPONENT OVERRIDES (affect both themes via CSS vars)
+   ──────────────────────────────────────────────────────────────────────── */
 .mat-mdc-card {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
-    border: 1px solid #e0e0e0 !important;
-    border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--surface) !important;
 }
+
+/* Card titles: DM Sans for admin, EB Garamond for student */
+.mat-mdc-card .mat-mdc-card-title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--text-main);
+}
+body:not(.admin-theme) .mat-mdc-card .mat-mdc-card-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+/* Form fields */
+.mat-mdc-form-field-subscript-wrapper { display: none; }
+.mat-mdc-text-field-wrapper { background: var(--surface) !important; }
+
+/* Buttons */
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-flat-button.mat-primary {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+/* Snackbars */
+.success-snackbar .mdc-snackbar__surface { background: #e8f5e9 !important; color: #2e7d32 !important; }
+.error-snackbar   .mdc-snackbar__surface { background: #fce4ec !important; color: #c62828 !important; }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   SHARED UTILITY CLASSES
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* ── Pill badges (boolean attendance cells) ───────────────────────────── */
+.pill-yes, .pill-no {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.pill-yes { background: var(--success-bg); color: var(--success-text); }
+.pill-no  { background: var(--danger-bg);  color: var(--danger-text);  }
+
+/* ── Stat card widget (student-list header) ───────────────────────────── */
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+}
+.stat-card__label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.stat-card__value {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1;
+}
+.stat-card__delta { font-size: 0.7rem; color: var(--success-text); margin-top: 4px; }
+.stat-card__delta.negative { color: var(--danger-text); }
+
+/* ── Page-level containers (new admin components) ─────────────────────── */
+.page-container { max-width: 900px; margin: 0 auto; padding: 8px 0; }

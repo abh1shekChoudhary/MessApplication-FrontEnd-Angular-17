@@ -1,34 +1,159 @@
-
-.toolbar-spacer {
-  flex: 1 1 auto;
+/* ── ADMIN SHELL ──────────────────────────────────────────────────────────── */
+.admin-shell {
+  display: flex;
+  min-height: 100vh;
 }
 
-.auth-spacer {
-  margin: 0 10px;
+.admin-sidebar {
+  width: 210px;
+  background: #1a2035;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
 }
 
-.user-identifier {
+/* Brand area */
+.sidebar-brand {
+  padding: 20px 20px 16px;
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+}
+.brand-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+.brand-sub {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5a6585;
+  margin-top: 2px;
+}
+
+/* Nav links */
+.sidebar-nav  { padding: 12px 0; flex: 1; }
+
+.nav-section-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5a6585;
+  padding: 10px 20px 4px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  color: #8892b0;
+  font-size: 13px;
+  text-decoration: none;
+  transition: all var(--transition);
+  border-left: 2px solid transparent;
+}
+.sidebar-link mat-icon  { font-size: 16px; width: 16px; height: 16px; }
+.sidebar-link:hover     { background: #212a45; color: #ccd6f6; }
+.sidebar-link.active    {
+  background: #1f3066;
+  color: #64b5f6;
+  border-left-color: #64b5f6;
+  padding-left: 18px;
+}
+
+/* Footer logout */
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 0.5px solid rgba(255,255,255,0.08);
+}
+.sidebar-logout {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: 24px;
-  padding: 6px 12px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  font-size: 0.9rem;
+  background: transparent;
+  border: 0.5px solid rgba(255,255,255,0.15);
+  color: #8892b0;
+  font-size: 12px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+}
+.sidebar-logout mat-icon { font-size: 16px; width: 16px; height: 16px; }
+.sidebar-logout:hover    { background: #212a45; color: #ccd6f6; }
+
+/* Main content area */
+.admin-main {
+  flex: 1;
+  padding: 28px;
+  overflow: auto;
+  min-width: 0; /* prevents flex overflow */
 }
 
-/* --- NEW STYLES for navigation buttons --- */
-/* Target all mat-button elements inside the toolbar that are not the logout button */
-.mat-toolbar a[mat-button],
-.mat-toolbar button[mat-button] {
-    padding: 0 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+/* ── STUDENT / GUEST TOPBAR ──────────────────────────────────────────────── */
+.student-topbar {
+  background: #2d1b0e;
+  height: 58px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* Add a subtle background color on hover to provide feedback */
-.mat-toolbar a[mat-button]:hover,
-.mat-toolbar button[mat-button]:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+.topbar-brand {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #e8a87c;
+  margin-right: auto;
 }
+.topbar-brand em {
+  font-style: normal;
+  font-weight: 300;
+  color: #fdf8f3;
+}
+
+.topbar-nav { display: flex; gap: 4px; }
+.topbar-nav a[mat-button] {
+  color: #b8997e;
+  font-size: 13px;
+  border-radius: 6px;
+  transition: all var(--transition);
+}
+.topbar-nav a[mat-button]:hover,
+.topbar-nav a[mat-button].active {
+  background: rgba(232,168,124,0.15);
+  color: #fdf8f3;
+}
+
+.topbar-logout {
+  margin-left: 20px;
+  background: #e8a87c;
+  color: #2d1b0e;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition);
+  font-family: var(--font-body);
+}
+.topbar-logout:hover { background: #c97a4a; }
+
+.student-main { padding: 28px; }

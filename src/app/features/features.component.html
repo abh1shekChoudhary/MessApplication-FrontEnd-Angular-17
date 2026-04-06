@@ -1,101 +1,96 @@
-<div class="showcase-container">
+<!-- Full showcase container — local CSS vars shift with view -->
+<div class="showcase" [class.view-admin]="view === 'admin'" [class.view-student]="view === 'student'">
 
-  <!-- Header Section -->
+  <!-- ── Header with mock nav preview ── -->
   <div class="showcase-header">
-    <mat-icon>preview</mat-icon>
-    <h1>Project Showcase</h1>
-    <p>Welcome! This is a read-only guest account. Click on any feature to see it in action.</p>
+
+    <!-- Mock nav preview: sidebar chip for admin, topbar chip for student -->
+    <div class="mock-nav" [class.mock-nav-admin]="view === 'admin'" [class.mock-nav-student]="view === 'student'">
+      <ng-container *ngIf="view === 'admin'">
+        <div class="mock-sidebar">
+          <span class="mock-sb-brand">Mess Admin</span>
+          <div class="mock-sb-row active"><span class="mock-dot"></span>Student List</div>
+          <div class="mock-sb-row"><span class="mock-dot"></span>Dues Report</div>
+          <div class="mock-sb-row"><span class="mock-dot"></span>Bulk Upload</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="view === 'student'">
+        <div class="mock-topbar">
+          <span class="mock-brand">Mess<em>mgmt.</em></span>
+          <div class="mock-tb-links">
+            <span class="mock-tb-link active">Today's Menu</span>
+            <span class="mock-tb-link">My History</span>
+            <span class="mock-tb-link">My Total</span>
+          </div>
+          <span class="mock-tb-btn">Sign Out</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Title -->
+    <div class="hero-text">
+      <h1 class="hero-title">{{ view === 'admin' ? 'Admin Experience' : 'Student Experience' }}</h1>
+      <p class="hero-sub">
+        <span *ngIf="view === 'admin'">
+          Manage the entire hostel — attendance, billing, menus and data imports — from a single control panel.
+        </span>
+        <span *ngIf="view === 'student'">
+          Your personal meal dashboard — track your attendance, check your bill, and plan meals ahead.
+        </span>
+      </p>
+    </div>
+
   </div>
 
-  <!-- Interactive Role Selector -->
-  <div class="role-selector">
-    <button mat-flat-button [class.active]="view === 'admin'" (click)="setView('admin')">
+  <!-- ── Role toggle pills ── -->
+  <div class="role-toggle">
+    <button class="toggle-pill" [class.pill-active]="view === 'admin'" (click)="setView('admin')">
       <mat-icon>admin_panel_settings</mat-icon>
       Admin View
     </button>
-    <button mat-flat-button [class.active]="view === 'student'" (click)="setView('student')">
+    <button class="toggle-pill" [class.pill-active]="view === 'student'" (click)="setView('student')">
       <mat-icon>face</mat-icon>
       Student View
     </button>
   </div>
 
-  <!-- Dynamic Features Grid -->
-  <div class="features-grid" [class.student-view-grid]="view === 'student'">
-    <!-- Admin Features (conditionally shown) -->
+  <!-- ── Feature tiles grid ── -->
+  <div class="tiles-grid" [class.grid-3]="view === 'student'">
+
     <ng-container *ngIf="view === 'admin'">
-      <a routerLink="/getStudents" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>View Daily Attendance</mat-card-title>
-          <mat-card-content>See a filterable, sortable list of all student attendance for a given day.</mat-card-content>
-        </mat-card>
-      </a>
-      <a routerLink="/students/dues" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>Generate Dues Report</mat-card-title>
-          <mat-card-content>Calculate and display total dues for all students within a date range.</mat-card-content>
-        </mat-card>
-      </a>
-      <a routerLink="/students/detail" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>View Student History</mat-card-title>
-          <mat-card-content>Look up the complete meal history for any individual student.</mat-card-content>
-        </mat-card>
-      </a>
-      <!-- MODIFIED ADMIN MENU LINK -->
-      <a routerLink="/menu/weekly" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>View Weekly Menu</mat-card-title>
-          <mat-card-content>See the full, hardcoded weekly menu for all meals and snacks.</mat-card-content>
-        </mat-card>
-      </a>
-      <a routerLink="/students/add/new" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>Add/Update Attendance</mat-card-title>
-          <mat-card-content>A smart "upsert" form that creates new records or merges with existing ones.</mat-card-content>
-        </mat-card>
-      </a>
-      <a routerLink="/students/update" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>Correct a Record</mat-card-title>
-          <mat-card-content>A precision tool to find and edit a specific, individual attendance record.</mat-card-content>
-        </mat-card>
-      </a>
-      <a routerLink="/students/delete" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>Delete a Record</mat-card-title>
-          <mat-card-content>A safe, two-step process to permanently delete a specific attendance record.</mat-card-content>
-        </mat-card>
-      </a>
-      <a routerLink="/students/total" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>Student Total Lookup</mat-card-title>
-          <mat-card-content>Check the current total bill for any individual student by their registration number.</mat-card-content>
-        </mat-card>
+      <a *ngFor="let f of adminFeatures"
+         [routerLink]="f.route"
+         class="tile-link">
+        <div class="feature-tile" matRipple>
+          <div class="tile-icon-wrap">
+            <mat-icon>{{ f.icon }}</mat-icon>
+          </div>
+          <div class="tile-body">
+            <div class="tile-title">{{ f.title }}</div>
+            <div class="tile-desc">{{ f.desc }}</div>
+          </div>
+          <mat-icon class="tile-arrow">arrow_forward</mat-icon>
+        </div>
       </a>
     </ng-container>
 
-    <!-- Student Features (conditionally shown) -->
     <ng-container *ngIf="view === 'student'">
-      <!-- MODIFIED STUDENT MENU LINK -->
-      <a routerLink="/menu/upcoming" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>View Today's Menu</mat-card-title>
-          <mat-card-content>See the next two upcoming meals based on the current time.</mat-card-content>
-        </mat-card>
-      </a>
-      <a routerLink="/students/detail" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>View My History</mat-card-title>
-          <mat-card-content>See a complete, sortable list of your personal meal history.</mat-card-content>
-        </mat-card>
-      </a>
-      <a routerLink="/students/total" class="feature-link">
-        <mat-card class="feature-tile">
-          <mat-card-title>View My Total Bill</mat-card-title>
-          <mat-card-content>Check your current total outstanding balance for all meals consumed.</mat-card-content>
-        </mat-card>
+      <a *ngFor="let f of studentFeatures"
+         [routerLink]="f.route"
+         class="tile-link">
+        <div class="feature-tile" matRipple>
+          <div class="tile-icon-wrap">
+            <mat-icon>{{ f.icon }}</mat-icon>
+          </div>
+          <div class="tile-body">
+            <div class="tile-title">{{ f.title }}</div>
+            <div class="tile-desc">{{ f.desc }}</div>
+          </div>
+          <mat-icon class="tile-arrow">arrow_forward</mat-icon>
+        </div>
       </a>
     </ng-container>
-  </div>
-</div>
 
+  </div>
+
+</div>

@@ -1,5 +1,7 @@
 <div class="dues-container">
-  <h2>Student Dues Report</h2>
+  <div class="page-header">
+    <h2>Dues Report</h2>
+  </div>
 
   <!-- Date Range Picker Form -->
   <div class="controls-container" [formGroup]="range">
@@ -24,7 +26,7 @@
   </div>
 
   <!-- Data Table -->
-  <div class="table-container mat-elevation-z8" [hidden]="isLoading">
+  <div class="table-container" [hidden]="isLoading">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- Reg. No. Column -->
       <ng-container matColumnDef="reg">

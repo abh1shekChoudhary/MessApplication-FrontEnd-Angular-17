@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
-
-// Material Modules
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-navigation',
@@ -16,16 +12,15 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     RouterLink,
-    MatToolbarModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule
+    RouterLinkActive,
+    RouterOutlet,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './navigation-bar.component.html',
   styleUrls: ['./navigation-bar.component.css']
 })
 export class NavigationComponent {
-  // Expose the registration number observable to the template
   currentUserRegNo$: Observable<string | null>;
 
   constructor(public authService: AuthService) {

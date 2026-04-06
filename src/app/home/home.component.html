@@ -1,44 +1,182 @@
-<div class="home-container">
-  <!-- Main Welcome Card -->
-  <mat-card class="welcome-banner">
-    <mat-card-header>
-      <mat-card-title class="banner-title">Mess Management Dashboard</mat-card-title>
-      <mat-card-subtitle class="banner-subtitle">Smart, Efficient, and Fair Meal Tracking for Modern Hostels.</mat-card-subtitle>
-    </mat-card-header>
-  </mat-card>
+<ng-container [ngSwitch]="role">
 
-  <!-- Grid for Feature Cards -->
-  <div class="features-grid">
-    <!-- Key Features Card -->
-    <mat-card class="feature-card">
-      <mat-card-header>
-        <mat-card-title>Core Features</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <ul class="features-list">
-          <li><mat-icon>payment</mat-icon> <span><strong>Pay-as-You-Eat:</strong> Track your balance and pay only for the meals you consume.</span></li>
-          <li><mat-icon>event_available</mat-icon> <span><strong>Attendance Management:</strong> Easily mark your meal attendance to ensure accurate billing.</span></li>
-          <li><mat-icon>receipt_long</mat-icon> <span><strong>Transparent Totals:</strong> Get a clear, detailed breakdown of your meal history and expenses.</span></li>
-          <li><mat-icon>admin_panel_settings</mat-icon> <span><strong>Effortless Admin:</strong> Admins can seamlessly manage all student records and data.</span></li>
-        </ul>
-      </mat-card-content>
-    </mat-card>
+  <!-- ══════════════════════════════════════════════════════════
+       ADMIN DASHBOARD
+       ══════════════════════════════════════════════════════════ -->
+  <div *ngSwitchCase="'admin'" class="admin-dashboard">
 
-    <!-- Next Steps Card with AI/ML focus -->
-    <mat-card class="next-steps-card">
-        <mat-card-header>
-          <!-- Use mat-card-avatar for a large, styled icon in the header -->
-          <mat-icon mat-card-avatar class="future-icon">auto_awesome</mat-icon>
-          <mat-card-title>The Future is Smart</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            Our next major leap involves integrating a <strong>Machine Learning model</strong> to analyze consumption patterns.
-          </p>
-          <p>
-            This will help us predict daily demand, significantly <strong>reduce food wastage</strong>, and contribute to a more sustainable environment.
-          </p>
-        </mat-card-content>
-    </mat-card>
+    <!-- Header row -->
+    <div class="dash-header">
+      <div>
+        <h1 class="dash-title">Good {{ greeting }}, Admin</h1>
+        <p class="dash-date">{{ todayLabel }}</p>
+      </div>
+      <span class="dash-badge">Live</span>
+    </div>
+
+    <!-- Spinner while loading -->
+    <div *ngIf="adminLoading" class="spinner-center">
+      <mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner>
+      <p class="spinner-label">Fetching today's data…</p>
+    </div>
+
+    <ng-container *ngIf="!adminLoading">
+
+      <!-- Stat cards -->
+      <div class="stats-row">
+        <div class="stat-card stat-total">
+          <div class="stat-card__label">Records Today</div>
+          <div class="stat-card__value">{{ todayTotalRecords }}</div>
+          <mat-icon class="stat-icon">people</mat-icon>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Breakfast</div>
+          <div class="stat-card__value">{{ todayBreakfast }}</div>
+          <mat-icon class="stat-icon">free_breakfast</mat-icon>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Lunch</div>
+          <div class="stat-card__value">{{ todayLunch }}</div>
+          <mat-icon class="stat-icon">lunch_dining</mat-icon>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Dinner</div>
+          <div class="stat-card__value">{{ todayDinner }}</div>
+          <mat-icon class="stat-icon">dinner_dining</mat-icon>
+        </div>
+      </div>
+
+      <!-- Quick actions + Prices row -->
+      <div class="two-col-row">
+
+        <!-- Quick actions -->
+        <div class="panel">
+          <h3 class="panel-title">Quick Actions</h3>
+          <div class="actions-grid">
+            <button *ngFor="let a of quickActions"
+                    class="action-btn" matRipple
+                    [routerLink]="a.route"
+                    [matTooltip]="a.label">
+              <mat-icon>{{ a.icon }}</mat-icon>
+              <span>{{ a.label }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Meal prices -->
+        <div class="panel">
+          <h3 class="panel-title">Current Meal Prices</h3>
+          <div class="prices-list">
+            <div class="price-row" *ngFor="let p of prices">
+              <span class="price-meal-type">{{ p.mealType | titlecase }}</span>
+              <span class="price-amount">₹{{ p.priceInr }}</span>
+            </div>
+            <div *ngIf="prices.length === 0" class="price-empty">No price data</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent records -->
+      <div class="panel" *ngIf="recentStudents.length > 0">
+        <h3 class="panel-title">Today's Recent Records</h3>
+        <div class="recent-list">
+          <div *ngFor="let s of recentStudents" class="recent-row">
+            <div class="recent-reg">{{ s.reg }}</div>
+            <div class="recent-pills">
+              <span [class]="s.breakfast ? 'pill-yes' : 'pill-no'">B</span>
+              <span [class]="s.lunch     ? 'pill-yes' : 'pill-no'">L</span>
+              <span [class]="s.dinner    ? 'pill-yes' : 'pill-no'">D</span>
+            </div>
+            <div class="recent-total">₹{{ s.total }}</div>
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
   </div>
-</div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       STUDENT DASHBOARD
+       ══════════════════════════════════════════════════════════ -->
+  <div *ngSwitchCase="'student'" class="student-dashboard">
+
+    <div class="student-header">
+      <h1 class="student-greeting">Good {{ greeting }}</h1>
+      <p class="student-date">{{ todayLabel }}</p>
+    </div>
+
+    <!-- Spinner while loading -->
+    <div *ngIf="studentLoading" class="spinner-center">
+      <mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner>
+    </div>
+
+    <ng-container *ngIf="!studentLoading">
+
+      <div class="student-main-grid">
+
+        <!-- ── Left column: Bill + Upcoming meals ── -->
+        <div class="student-left">
+
+          <!-- Total bill card -->
+          <div class="bill-card">
+            <div class="bill-label">My Current Bill</div>
+            <div class="bill-amount">₹{{ studentTotal ?? '—' }}</div>
+            <div class="bill-reg">{{ studentRegNo }}</div>
+            <a class="bill-link" routerLink="/students/total">View breakdown →</a>
+          </div>
+
+          <!-- Upcoming meals -->
+          <div class="panel upcoming-panel-home" *ngIf="upcomingMeals.length">
+            <h3 class="panel-title">Upcoming Meals</h3>
+            <div *ngFor="let m of upcomingMeals" class="upcoming-row">
+              <span class="upcoming-type">{{ m.mealType }}</span>
+              <span class="upcoming-name">{{ m.meal.name }}</span>
+            </div>
+            <a class="see-more-link" routerLink="/menu/upcoming">Full menu →</a>
+          </div>
+
+        </div>
+
+        <!-- ── Right column: Monthly attendance calendar ── -->
+        <div class="student-right">
+          <div class="calendar-card">
+            <div class="cal-header">
+              <h3 class="cal-month">{{ calendarMonthLabel }}</h3>
+              <div class="cal-legend">
+                <span class="leg-dot dot-b"></span>B
+                <span class="leg-dot dot-l"></span>L
+                <span class="leg-dot dot-d"></span>D
+              </div>
+            </div>
+
+            <!-- Day headers -->
+            <div class="cal-grid">
+              <div *ngFor="let h of dayHeaders" class="cal-day-header">{{ h }}</div>
+
+              <!-- Calendar cells -->
+              <ng-container *ngFor="let week of calendarWeeks">
+                <div *ngFor="let day of week"
+                     class="cal-day"
+                     [class.other-month]="!day.isCurrentMonth"
+                     [class.is-today]="day.isToday"
+                     [class.is-future]="day.isFuture"
+                     [class.has-record]="day.hasRecord && day.isCurrentMonth"
+                     [routerLink]="day.isCurrentMonth && !day.isFuture ? '/students/detail' : null">
+                  <span class="cal-day-num">{{ day.dayNum }}</span>
+                  <div class="cal-dots" *ngIf="day.hasRecord && day.isCurrentMonth">
+                    <span class="dot dot-b" [class.dot-off]="!day.breakfast"></span>
+                    <span class="dot dot-l" [class.dot-off]="!day.lunch"></span>
+                    <span class="dot dot-d" [class.dot-off]="!day.dinner"></span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+
+</ng-container>

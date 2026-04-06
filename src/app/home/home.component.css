@@ -1,114 +1,354 @@
-/* Main container for the home page */
-.home-container {
+/* ── Shared ─────────────────────────────────────────────────────────────── */
+.spinner-center {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-/* Style for the main welcome banner */
-.welcome-banner {
-  background: linear-gradient(90deg, #4242b1, #673ab7);
-  color: white;
-  padding: 30px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 64px 0;
+  gap: 16px;
+}
+.spinner-label { color: var(--text-muted); font-size: 0.85rem; margin: 0; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+}
+.panel-title {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 16px;
 }
 
-.banner-title {
-    font-size: 2.5rem;
-    font-weight: 300;
+/* ── Admin Dashboard ────────────────────────────────────────────────────── */
+.admin-dashboard { display: flex; flex-direction: column; gap: 20px; }
+
+.dash-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.dash-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0;
+}
+.dash-date {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+.dash-badge {
+  background: var(--success-bg);
+  color: var(--success-text);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
 }
 
-.banner-subtitle {
-    font-size: 1.2rem;
-    margin-top: 8px;
-    color: rgba(255, 255, 255, 0.85);
+/* Stat cards */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.stat-total { border-top: 3px solid var(--accent); }
+.stat-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  height: 32px;
+  width: 32px;
+  color: var(--border-color);
 }
 
-/* Use CSS Grid to create a two-column layout */
-.features-grid {
+/* Two-column layout */
+.two-col-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 16px;
 }
 
-/* Common styles for all cards in the grid */
-.feature-card, .next-steps-card {
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  border: 1px solid #eee;
+/* Quick actions */
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }
-
-.feature-card:hover, .next-steps-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-body);
 }
+.action-btn mat-icon { font-size: 20px; height: 20px; width: 20px; color: var(--accent); }
+.action-btn:hover { background: var(--surface); border-color: var(--accent); color: var(--text-main); }
 
-/* Style the feature list to work with icons */
-.features-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.features-list li {
+/* Prices */
+.prices-list { display: flex; flex-direction: column; gap: 10px; }
+.price-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.price-row:last-child { border-bottom: none; }
+.price-meal-type { font-size: 0.88rem; color: var(--text-main); font-weight: 500; }
+.price-amount {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--success-text);
+  background: var(--success-bg);
+  padding: 2px 12px;
+  border-radius: 20px;
+}
+.price-empty { color: var(--text-hint); font-size: 0.85rem; }
+
+/* Recent list */
+.recent-list    { display: flex; flex-direction: column; gap: 8px; }
+.recent-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+}
+.recent-reg   { font-weight: 500; color: var(--text-main); flex: 1; }
+.recent-pills { display: flex; gap: 4px; }
+.recent-total { font-weight: 600; color: var(--text-main); margin-left: 12px; }
+
+/* ── Student Dashboard ──────────────────────────────────────────────────── */
+.student-dashboard { display: flex; flex-direction: column; gap: 24px; }
+
+.student-header { margin-bottom: 4px; }
+.student-greeting {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--text-main);
+  margin: 0;
+}
+.student-date { font-size: 0.85rem; color: var(--text-muted); margin: 4px 0 0; }
+
+.student-main-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.student-left  { display: flex; flex-direction: column; gap: 16px; }
+
+/* Bill card */
+.bill-card {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-dark) 100%);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.bill-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+.bill-amount {
+  font-family: var(--font-serif);
+  font-size: 3.2rem;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+.bill-reg {
+  font-size: 0.75rem;
+  opacity: 0.55;
+  margin-bottom: 16px;
+}
+.bill-link {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  transition: opacity var(--transition);
+}
+.bill-link:hover { opacity: 1; color: #fff; }
+
+/* Upcoming meals panel */
+.upcoming-panel-home { }
+.upcoming-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+.upcoming-row:last-of-type { margin-bottom: 8px; }
+.upcoming-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-hint); font-weight: 600; }
+.upcoming-name { font-size: 0.95rem; font-family: var(--font-serif); color: var(--text-main); }
+.see-more-link { font-size: 0.78rem; color: var(--accent-dark); text-decoration: none; }
+.see-more-link:hover { text-decoration: underline; }
+
+/* ── Month Calendar ─────────────────────────────────────────────────────── */
+.calendar-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  overflow: hidden;
+}
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
-  font-size: 1.05rem;
-  line-height: 1.4;
+}
+.cal-month {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--text-main);
+  margin: 0;
+}
+.cal-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.leg-dot { width: 7px; height: 7px; border-radius: 50%; margin-left: 8px; }
+
+/* 7-column grid */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal-day-header {
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 4px 0 8px;
 }
 
-.features-list mat-icon {
-  margin-right: 16px;
-  color: var(--primary-color);
+/* Day cells */
+.cal-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 6px 2px 4px;
+  border-radius: var(--radius-sm);
+  min-height: 52px;
+  cursor: default;
+  transition: background var(--transition);
+  position: relative;
+}
+.cal-day.other-month { opacity: 0.2; }
+.cal-day.is-future   { opacity: 0.4; }
+.cal-day.has-record  { cursor: pointer; }
+.cal-day.has-record:hover { background: var(--surface-2); }
+.cal-day.is-today {
+  background: var(--border-color);
+}
+.cal-day.is-today .cal-day-num {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ================================================= */
-/* NEW STYLES for the "Future is Smart" card */
-/* ================================================= */
-
-.next-steps-card {
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-    color: white;
+.cal-day-num {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-main);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.other-month .cal-day-num { font-weight: 400; }
 
-/* Style the large icon in the header */
-.next-steps-card .future-icon {
-    height: 50px;
-    width: 50px;
-    font-size: 50px;
-    color: rgba(255, 255, 255, 0.9);
+/* Attendance dots */
+.cal-dots {
+  display: flex;
+  gap: 2px;
+  margin-top: 4px;
 }
-
-/* Adjust the title and content colors for the dark background */
-.next-steps-card mat-card-title {
-    color: white;
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
+.dot-b  { background: #e8a87c; }           /* terracotta — breakfast */
+.dot-l  { background: #5e7a4a; }           /* herb green — lunch */
+.dot-d  { background: #8892b0; }           /* muted blue — dinner */
+.dot-off { opacity: 0.18; }
 
-.next-steps-card mat-card-content p {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1.05rem;
-    line-height: 1.5;
+/* legend uses same colors */
+.leg-dot.dot-b { background: #e8a87c; }
+.leg-dot.dot-l { background: #5e7a4a; }
+.leg-dot.dot-d { background: #8892b0; }
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .stats-row           { grid-template-columns: repeat(2, 1fr); }
+  .two-col-row         { grid-template-columns: 1fr; }
+  .student-main-grid   { grid-template-columns: 1fr; }
+  .actions-grid        { grid-template-columns: repeat(2, 1fr); }
 }
-
-.next-steps-card strong {
-    color: white;
-    font-weight: 500;
-}
-
-
-/* Make the grid stack on smaller screens */
-@media (max-width: 768px) {
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-  .banner-title {
-    font-size: 1.8rem;
-  }
-  .banner-subtitle {
-    font-size: 1rem;
-  }
+@media (max-width: 600px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .bill-amount { font-size: 2.4rem; }
 }

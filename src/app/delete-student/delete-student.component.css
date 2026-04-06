@@ -1,45 +1,41 @@
 .form-container {
   display: flex;
   justify-content: center;
-  padding: 40px;
+  padding: 8px 0;
 }
 
 mat-card {
   width: 100%;
   max-width: 600px;
 }
-
-mat-card-header {
-  margin-bottom: 20px;
-}
+mat-card-header { margin-bottom: 20px; }
 
 .search-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
 }
 
 .delete-button {
-  margin-top: 20px;
+  margin-top: 16px;
   width: 100%;
 }
 
 .response-message {
-  margin: 20px;
-  padding: 15px;
-  border-radius: 8px;
+  margin: 16px 0;
+  padding: 14px;
+  border-radius: var(--radius-md);
   text-align: center;
   font-weight: 500;
+  font-size: 0.9rem;
 }
-
 .success {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-  border: 1px solid #a5d6a7;
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid var(--success-text);
 }
-
 .error {
-  background-color: #ffebee;
-  color: #c62828;
-  border: 1px solid #ef9a9a;
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1px solid var(--danger-text);
 }

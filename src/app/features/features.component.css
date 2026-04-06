@@ -1,152 +1,261 @@
+/* ── Local CSS custom properties — drive the full scene transition ──────── */
+.showcase {
+  --sc-bg:       #fdf8f3;
+  --sc-accent:   #e8a87c;
+  --sc-accent2:  #c97a4a;
+  --sc-primary:  #2d1b0e;
+  --sc-muted:    #8a7355;
+  --sc-border:   #f0e6d8;
+  --sc-surface:  #ffffff;
+  --sc-pill-bg:  #2d1b0e;
+  --sc-pill-txt: #e8a87c;
+  --sc-nav-bg:   #2d1b0e;
+  --tile-top:    #e8a87c;
+  --tile-title-color: #2d1b0e;
 
-:host {
-  display: block;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: 100vh;
-  padding: 24px 0;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+  min-height: 100%;
+  background-color: var(--sc-bg);
+  color: var(--sc-primary);
+  padding: 32px;
+  box-sizing: border-box;
 }
 
-.showcase-container {
-  padding: 40px 24px;
-  max-width: 80%; /* Wider layout for the "80% zoom" feel */
-  margin: 0 auto;
-  animation: fadeIn 0.6s ease-in-out;
+/* Admin scene overrides */
+.showcase.view-admin {
+  --sc-bg:       #f0f2f5;
+  --sc-accent:   #64b5f6;
+  --sc-accent2:  #1f3066;
+  --sc-primary:  #1a2035;
+  --sc-muted:    #8892b0;
+  --sc-border:   #dde2ec;
+  --sc-surface:  #ffffff;
+  --sc-pill-bg:  #1a2035;
+  --sc-pill-txt: #64b5f6;
+  --sc-nav-bg:   #1a2035;
+  --tile-top:    #64b5f6;
+  --tile-title-color: #1a2035;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* ── Header ──────────────────────────────────────────────────────────────── */
 .showcase-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.showcase-header h1 {
-  font-size: 3.2rem; /* Larger font size */
-  font-weight: 400;
-  margin: 12px 0; /* Increased margin */
-  color: #2c3e50;
-}
-
-.showcase-header mat-icon {
-  font-size: 52px;
-  height: 52px;
-  width: 52px;
-  color: #3f51b5;
-}
-
-.showcase-header p {
-  font-size: 1.25rem; /* Larger font size */
-  color: #34495e;
-  max-width: 800px; /* Wider max-width for the single line */
-  margin: 0 auto;
-  line-height: 1.5;
-}
-
-/* Role Selector Styles */
-.role-selector {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 40px;
-}
-
-.role-selector button {
-  padding: 12px 28px; /* More padding */
-  font-size: 1.1rem; /* Larger font size */
-  border-radius: 20px;
-  background-color: #fff;
-  color: #555;
-  transition: all 0.2s ease-in-out;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.role-selector button.active {
-  background-color: #3f51b5;
-  color: white;
-  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
-}
-
-.role-selector button:not(.active):hover {
-    background-color: #f0f0f0;
-}
-
-/* Feature Grid Styles */
-.features-grid {
-  display: grid;
-  /* A 4-column grid for admins */
-  grid-template-columns: repeat(4, 1fr);
+  flex-direction: column;
   gap: 24px;
+  margin-bottom: 32px;
 }
 
-/* Specific style to center the 3 student features */
-.features-grid.student-view-grid {
-    display: grid;
-    /* A 3-column grid for students */
-    grid-template-columns: repeat(3, 1fr);
+.hero-text { max-width: 660px; }
+.hero-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--sc-primary);
+  margin: 0 0 10px;
+  transition: color 0.5s ease;
+}
+.view-student .hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-weight: 400;
+  font-size: 2.2rem;
+}
+.hero-sub {
+  font-size: 1rem;
+  color: var(--sc-muted);
+  line-height: 1.6;
+  margin: 0;
+  transition: color 0.5s ease;
 }
 
+/* ── Mock Nav Preview ────────────────────────────────────────────────────── */
+.mock-nav {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
 
-.feature-link {
-  text-decoration: none;
-  color: inherit;
+/* Admin mock sidebar */
+.mock-sidebar {
+  background: var(--sc-nav-bg);
+  width: 200px;
+  padding: 16px;
+  border-radius: 10px;
+  transition: background 0.5s ease;
+}
+.mock-sb-brand {
   display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #fff;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid rgba(255,255,255,0.1);
 }
+.mock-sb-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: #8892b0;
+  padding: 6px 0;
+  transition: color 0.3s;
+}
+.mock-sb-row.active { color: var(--sc-accent); }
+.mock-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* Student mock topbar */
+.mock-topbar {
+  background: var(--sc-nav-bg);
+  height: 44px;
+  border-radius: 10px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: background 0.5s ease;
+}
+.mock-brand {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sc-accent);
+  margin-right: auto;
+  transition: color 0.5s;
+}
+.mock-brand em { font-style: normal; font-weight: 300; color: #fdf8f3; }
+.mock-tb-links  { display: flex; gap: 12px; }
+.mock-tb-link {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+}
+.mock-tb-link.active { color: #fff; }
+.mock-tb-btn {
+  font-size: 10px;
+  background: var(--sc-accent);
+  color: var(--sc-primary);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.5s, color 0.5s;
+}
+
+/* ── Role toggle ────────────────────────────────────────────────────────── */
+.role-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.toggle-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--sc-border);
+  background: var(--sc-surface);
+  color: var(--sc-muted);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.4s ease;
+}
+.toggle-pill mat-icon { font-size: 17px; height: 17px; width: 17px; }
+.toggle-pill.pill-active {
+  background: var(--sc-pill-bg);
+  color: var(--sc-pill-txt);
+  border-color: var(--sc-pill-bg);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+/* ── Feature tiles ──────────────────────────────────────────────────────── */
+.tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  transition: all 0.4s ease;
+}
+.tiles-grid.grid-3 { grid-template-columns: repeat(2, 1fr); max-width: 700px; }
+
+.tile-link { text-decoration: none; color: inherit; display: block; }
 
 .feature-tile {
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-border);
+  border-top: 3px solid var(--tile-top);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   height: 100%;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  border: none;
-  border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  padding: 24px;
-  text-align: center; /* Center the title and content */
-}
-
-.feature-tile:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transition:
+    border-top-color 0.5s ease,
+    border-color 0.5s ease,
+    background 0.5s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  box-sizing: border-box;
   cursor: pointer;
 }
-
-.feature-tile mat-card-title {
-  font-size: 1.3rem; /* Larger font size */
-  font-weight: 500;
-  color: #3f51b5;
-  margin-bottom: 12px;
+.feature-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.09);
 }
 
-.feature-tile mat-card-content {
-  color: #34495e;
-  font-size: 1.05rem; /* Larger font size */
+.tile-icon-wrap {
+  width: 40px;
+  height: 40px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.5s;
+}
+.view-admin .tile-icon-wrap  { background: rgba(100,181,246,0.12); }
+.view-student .tile-icon-wrap { background: rgba(232,168,124,0.12); }
+
+.tile-icon-wrap mat-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  color: var(--tile-top);
+  transition: color 0.5s;
+}
+
+.tile-body { flex: 1; }
+.tile-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--tile-title-color);
+  margin-bottom: 6px;
+  transition: color 0.5s;
+}
+.tile-desc {
+  font-size: 0.8rem;
+  color: var(--sc-muted);
   line-height: 1.5;
+  transition: color 0.5s;
 }
-
-@media (max-width: 1200px) {
-    .features-grid {
-        /* Switch to 2 columns on medium screens */
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .features-grid.student-view-grid {
-        grid-template-columns: 1fr;
-    }
+.tile-arrow {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  color: var(--sc-muted);
+  align-self: flex-end;
+  opacity: 0;
+  transition: opacity 0.2s, color 0.5s;
 }
+.feature-tile:hover .tile-arrow { opacity: 1; color: var(--tile-top); }
 
-
-@media (max-width: 768px) {
-  .showcase-container {
-    max-width: 95%;
-    padding: 24px 16px;
-  }
-  .role-selector {
-      flex-direction: column;
-  }
-  .features-grid {
-      /* Switch to 1 column on small screens */
-      grid-template-columns: 1fr;
-  }
-}
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) { .tiles-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px)  { .tiles-grid, .tiles-grid.grid-3 { grid-template-columns: 1fr; } .showcase { padding: 20px 16px; } }
